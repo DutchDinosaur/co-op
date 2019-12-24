@@ -26,6 +26,8 @@ public class TerrainGen : MonoBehaviour{
 
         CreateShape();
         UpdateMesh();
+
+        GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     void CreateShape() {

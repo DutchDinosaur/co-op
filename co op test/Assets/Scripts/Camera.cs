@@ -13,6 +13,9 @@ public class Camera : MonoBehaviour {
 
     private void Start() {
         CamPosOffset = transform.position;
+        if (trackpos == null) {
+            trackpos = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
     void Update()

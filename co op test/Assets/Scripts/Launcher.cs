@@ -9,6 +9,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
     [SerializeField] GameObject connecting;
 
     string gameVersion = "1";
+    bool isConnecting;
 
     private void Start() {
         inputPanel.SetActive(true);
@@ -20,10 +21,12 @@ public class Launcher : MonoBehaviourPunCallbacks {
     }
 
     public void Connect() {
+        isConnecting = true;
+
         inputPanel.SetActive(false);
         connecting.SetActive(true);
         if (PhotonNetwork.IsConnected) {
-        PhotonNetwork.JoinRandomRoom();
+            PhotonNetwork.JoinRandomRoom();
         }
         else {
             PhotonNetwork.GameVersion = gameVersion;
@@ -32,17 +35,19 @@ public class Launcher : MonoBehaviourPunCallbacks {
     }
 
     public override void OnConnectedToMaster() {
-        Debug.Log("connected");
-        PhotonNetwork.JoinRandomRoom();
+        if (isConnecting) {
+            PhotonNetwork.JoinRandomRoom();
+        }
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message) {
-        Debug.Log("creating new room");
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayers });
     }
 
     public override void OnJoinedRoom() {
-        Debug.Log("joined room");
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1) {
+            PhotonNetwork.LoadLevel(1);
+        }
     }
 
     public override void OnDisconnected(DisconnectCause cause) {
