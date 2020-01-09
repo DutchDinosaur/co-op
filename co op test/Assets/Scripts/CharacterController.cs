@@ -6,7 +6,8 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField] float speed = 5;
     [SerializeField] float RunMultip = 1.5f;
-    [SerializeField] float WalkingThreshold;
+    [SerializeField] float JumpForce = 50;
+
     Rigidbody rb;
     PlayerManager pm;
     Animator aninimator;
@@ -20,7 +21,9 @@ public class CharacterController : MonoBehaviour
         aninimator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        Camera.main.GetComponent<CameraController>().trackpos = transform;
+        if (pm.IsMine) {
+            Camera.main.GetComponent<CameraController>().trackpos = transform;
+        }
     }
 
     private void Update() {
@@ -40,7 +43,7 @@ public class CharacterController : MonoBehaviour
             }
 
             spd = speed;
-            if (Input.GetKey(KeyCode.LeftShift)) {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
                 spd *= RunMultip;
                 aninimator.SetBool("Running", true);
             }
@@ -48,7 +51,21 @@ public class CharacterController : MonoBehaviour
                 aninimator.SetBool("Running", false);
             }
 
-            rb.AddForce(new Vector3(Input.GetAxis("Horizontal") * spd * Time.deltaTime, 0, Input.GetAxis("Vertical") * spd * Time.deltaTime));
+            Vector2 inputVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+
+            //rb.velocity = new Vector3(inputVector.x * spd, rb.velocity.y,inputVector.y * spd);
+            rb.MovePosition(transform.position + new Vector3(inputVector.x * spd, 0, inputVector.y * spd));
+
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded()) {
+                rb.velocity += Vector3.up * JumpForce;
+            }
+
+            //rb.AddForce(new Vector3(inputVector.x * spd * Time.deltaTime, 0, inputVector.y * spd * Time.deltaTime));
+            //rb.AddForce(new Vector3(-rb.velocity.x * counterForce,0,-rb.velocity.z * counterForce));
         }
+    }
+
+    private bool isGrounded() {
+        return Physics.Raycast(transform.position, Vector3.down, .75f + 0.1f);
     }
 }

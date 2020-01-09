@@ -9,6 +9,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public bool IsMine;
 
     private void Awake() {
+        if (IsMine) {
+            PlayerManager.LocalPlayerInstance = this.gameObject;
+        }
+
         if (photonView.IsMine) {
             PlayerManager.LocalPlayerInstance = this.gameObject;
             IsMine = true;
