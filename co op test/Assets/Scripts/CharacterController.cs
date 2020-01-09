@@ -62,6 +62,13 @@ public class CharacterController : MonoBehaviour
 
             //rb.AddForce(new Vector3(inputVector.x * spd * Time.deltaTime, 0, inputVector.y * spd * Time.deltaTime));
             //rb.AddForce(new Vector3(-rb.velocity.x * counterForce,0,-rb.velocity.z * counterForce));
+
+            if (Input.GetKey(KeyCode.E) && isGrounded()) {
+                aninimator.SetBool("Pot", true);
+            }
+            else {
+                aninimator.SetBool("Pot", false);
+            }
         }
     }
 

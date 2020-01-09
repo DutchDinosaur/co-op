@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86a51472fa4b6c489bfb9b81cfc5d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayers: 2
+  maxPlayers: 20
   inputPanel: {fileID: 2044376026}
   connecting: {fileID: 1548663041}
 --- !u!4 &436088297

@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public static GameObject LocalPlayerInstance;
     public bool IsMine;
 
+    [SerializeField] private TextMesh name;
+
     private void Awake() {
         if (IsMine) {
             PlayerManager.LocalPlayerInstance = this.gameObject;
@@ -17,5 +19,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             PlayerManager.LocalPlayerInstance = this.gameObject;
             IsMine = true;
         }
+
+        name.text = photonView.Owner.NickName;
     }
 }

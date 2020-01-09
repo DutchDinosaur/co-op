@@ -4,7 +4,7 @@ using Photon.Realtime;
 
 public class Launcher : MonoBehaviourPunCallbacks {
 
-    [SerializeField] byte maxPlayers = 2;
+    [SerializeField] byte maxPlayers = 20;
     [SerializeField] GameObject inputPanel;
     [SerializeField] GameObject connecting;
 
@@ -30,6 +30,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
         }
         else {
             PhotonNetwork.GameVersion = gameVersion;
+            //PhotonNetwork.ConnectToRegion(Region);
             PhotonNetwork.ConnectUsingSettings();
         }
     }
