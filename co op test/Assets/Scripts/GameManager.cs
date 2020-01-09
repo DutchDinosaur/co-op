@@ -11,8 +11,10 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
     private void Start() {
         if (PlayerManager.LocalPlayerInstance == null) {
-            PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
+            PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f, 2f, 0f), Quaternion.identity, 0);
             Debug.Log("instantiating " + PlayerManager.LocalPlayerInstance.name);
+
+            Camera.main.GetComponent<CameraController>().trackpos = PlayerManager.LocalPlayerInstance.transform;
         }
     }
 
@@ -34,11 +36,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
         PhotonNetwork.LoadLevel(1);
     }
 
-    public override void OnPlayerEnteredRoom(Player other) {
-        Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName);
+    public override void OnPlayerEnteredRoom(Player player) {
+        Debug.LogFormat("OnPlayerEnteredRoom() {0}", player.NickName);
     }
 
-    public override void OnPlayerLeftRoom(Player other) {
-        Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName);
+    public override void OnPlayerLeftRoom(Player player) {
+        Debug.LogFormat("OnPlayerLeftRoom() {0}", player.NickName);
     }
 }

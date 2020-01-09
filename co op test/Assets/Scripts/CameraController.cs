@@ -13,13 +13,12 @@ public class CameraController : MonoBehaviour {
 
     private void Start() {
         CamPosOffset = transform.position;
-        if (trackpos == null) {
-            trackpos = GameObject.FindGameObjectWithTag("Player").transform;
-        }
+        //if (trackpos == null) {
+        //    trackpos = GameObject.FindGameObjectWithTag("Player").transform;
+        //}
     }
 
-    void Update()
-    {
+    void Update() {
         Vector3 desiredPos = trackpos.position + CamPosOffset;
         Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPos, ref camVelocity, smoothTime);
         transform.position = smoothedPosition;

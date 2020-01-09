@@ -34,24 +34,24 @@ public class Launcher : MonoBehaviourPunCallbacks {
         }
     }
 
-    //public override void OnConnectedToMaster() {
-    //    if (isConnecting) {
-    //        PhotonNetwork.JoinRandomRoom();
-    //    }
-    //}
+    public override void OnConnectedToMaster() {
+        if (isConnecting) {
+            PhotonNetwork.JoinRandomRoom();
+        }
+    }
 
-    //public override void OnJoinRandomFailed(short returnCode, string message) {
-    //    PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayers });
-    //}
+    public override void OnJoinRandomFailed(short returnCode, string message) {
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayers });
+    }
 
-    //public override void OnJoinedRoom() {
-    //    if (PhotonNetwork.CurrentRoom.PlayerCount == 1) {
-    //        PhotonNetwork.LoadLevel(1);
-    //    }
-    //}
+    public override void OnJoinedRoom() {
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1) {
+            PhotonNetwork.LoadLevel(1);
+        }
+    }
 
-    //public override void OnDisconnected(DisconnectCause cause) {
-    //    inputPanel.SetActive(false);
-    //    connecting.SetActive(true);
-    //}
+    public override void OnDisconnected(DisconnectCause cause) {
+        inputPanel.SetActive(false);
+        connecting.SetActive(true);
+    }
 }
